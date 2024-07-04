@@ -29,7 +29,22 @@ public class App {
                 case 1:
                     ingresarsaldo(leer);
                     break;
-            
+                
+                case 2:
+                    registrarEntrada(leer);
+                    break;
+                
+                case 3:
+
+                    break;
+
+                case 4: 
+
+                    break;
+
+                case 5:
+                    continuar = false;
+                    break;
                 default:
                     break;
             }
@@ -48,5 +63,23 @@ public class App {
         caja.registrarMovimiento(entradaSaldo);
         System.out.println("Saldo registrado");
 
+    }
+
+    private static void registrarEntrada (Scanner leer) {
+
+        System.out.println("Ingrese el monto de la entrada de dinero ");
+        double valor = leer.nextDouble();
+        leer.nextLine();
+
+        System.out.println("Ingrese una descripcion al movimiento ");
+        String descripcion = leer.nextLine();
+
+        System.out.println("Ingrese la fecha del movimiento (Formato dia/mes/año)");
+        String fecha = leer.nextLine();
+
+        Movimientos entrada = new Entradas(valor, descripcion, fecha);
+        movimientos.add(entrada);
+        caja.registrarMovimiento(entrada);
+        System.out.println("Entrada registrada correctamente.");
     }
 }
