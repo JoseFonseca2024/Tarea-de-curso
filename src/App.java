@@ -1,13 +1,21 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class App {
 
+    private static String rutaname = "C:\\Users\\Usuario\\Desktop\\Tarea de curso\\src\\Archivo\\";
     private static ArrayList<Movimientos> movimientos = new ArrayList<>();
     private static Caja caja = new Caja(0);;
+
     public static void main(String[] args) throws Exception {
-        
         Scanner leer = new Scanner(System.in);
+
+        leer();
 
         boolean continuar = true;
 
@@ -21,7 +29,7 @@ public class App {
                 System.out.println("2. Registrar entrada");
                 System.out.println("3. Registrar salida");
                 System.out.println("4. Mostrar movimientos y saldo actual");
-                System.out.println("5. Salir");
+                System.out.println("5. Guardar y Salir");
 
             int respuesta = leer.nextInt();
 
@@ -54,6 +62,8 @@ public class App {
                     break;
             }
         } while (continuar);
+
+        escribir();
 
     }
 
@@ -113,5 +123,41 @@ public class App {
         }
        }
         System.out.println("Saldo actual de caja: "+caja.getSaldo());
+    }
+
+     private static void escribir() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaname+"Movimiento.txt", true))) {
+            for (Movimientos movimiento : movimientos) {
+                writer.write(movimiento.getFecha() + "," + movimiento.getTipo() + "," + movimiento.getMonto() + "," + movimiento.getDescripcion());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        }
+
+        private static void leer() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(rutaname+"Movimiento.txt"))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] partes = linea.split(",");
+                String fecha = partes[0];
+                String tipo = partes[1];
+                double monto = Double.parseDouble(partes[2]);
+                String descripcion = partes[3];
+
+                Movimientos movimiento;
+                if (tipo.equals("Entrada")) {
+                    movimiento = new Entradas(monto, descripcion, fecha);
+                } else {
+                    movimiento = new Salidas(monto, descripcion, fecha);
+                }
+
+                movimientos.add(movimiento);
+                caja.registrarMovimiento(movimiento);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
