@@ -1,1 +1,7 @@
 20/03/2024,Entrada,100.0,Ingreso de saldo
+20/03/2024,Entrada,100.0,Ingreso de saldo
+20/03/2024,Entrada,100.0,Ingreso de saldo
+20/03/2024,Entrada,100.0,Ingreso de saldo
+4/7/2024,Entrada,200.0,Ingreso de saldo
+30/06/2024,Entrada,1000.0,Venta del mes
+1/7/2024,Salida,1100.0,Devolucion
